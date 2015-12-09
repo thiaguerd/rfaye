@@ -1,3 +1,9 @@
+# 0.5
+  - add generator
+  - use faye js original
+# 0.4
+  - add sub with overwrite
+  - update helper 
 # 0.3
   - add Rfaye on js
   - add faye extension

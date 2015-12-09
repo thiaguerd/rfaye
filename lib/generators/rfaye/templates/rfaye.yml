@@ -1,0 +1,6 @@
+development:
+  token: "<%= defined?(SecureRandom) ? SecureRandom.hex(64) : ActiveSupport::SecureRandom.hex(64) %>"
+test:
+  token: "<%= defined?(SecureRandom) ? SecureRandom.hex(64) : ActiveSupport::SecureRandom.hex(64) %>"
+production:
+  token: "<%= defined?(SecureRandom) ? SecureRandom.hex(64) : ActiveSupport::SecureRandom.hex(64) %>"

@@ -1,11 +1,12 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'rfaye/version'
+# require 'rfaye'
+require 'rfaye/conf'
 
 Gem::Specification.new do |s|
 	s.name        = 'rfaye'
-	s.version     = Rfaye::VERSION
+	s.version     = Rfaye::Conf.version
 	s.date        = Time.now.strftime("%Y-%m-%d")
 	s.summary     = "Rails Faye"
 	s.description = "Simple messaging "
