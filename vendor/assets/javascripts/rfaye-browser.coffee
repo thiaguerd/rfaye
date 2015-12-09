@@ -23,5 +23,5 @@
 
 	pub: (channel,data) ->
 		channel = "/" + channel if channel.substring(0,1) != "/"
-		new Faye.Client("""http://#{window.location.hostname}:9292/faye""").publish(channel, data.toString())
+		new Faye.Client("""http://#{window.location.hostname}:9292/faye""").publish(channel, if typeof data == "function" then data.toString() else data)
 		null

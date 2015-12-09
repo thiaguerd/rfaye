@@ -23,26 +23,29 @@
             }
           };
         }
-        return Rfaye.subs[channel] = new Faye.Client('http://' + window.location.hostname + ':9292/faye').subscribe(channel, func);
+        Rfaye.subs[channel] = new Faye.Client("http://" + window.location.hostname + ":9292/faye").subscribe(channel, func);
       } else if (overwrite) {
         Rfaye.subs[channel].cancel();
         Rfaye.subs[channel] = void 0;
-        return Rfaye.sub(channel, func);
+        Rfaye.sub(channel, func);
       }
+      return null;
     },
     un_sub: function(channel) {
       if (channel.substring(0, 1) !== "/") {
         channel = "/" + channel;
       }
       if (Rfaye.subs[channel]) {
-        return Rfaye.subs[channel].cancel();
+        Rfaye.subs[channel].cancel();
       }
+      return null;
     },
     pub: function(channel, data) {
       if (channel.substring(0, 1) !== "/") {
         channel = "/" + channel;
       }
-      return new Faye.Client("http://" + window.location.hostname + ":9292/faye").publish(channel, data.toString());
+      new Faye.Client("http://" + window.location.hostname + ":9292/faye").publish(channel, typeof data === "function" ? data.toString() : data);
+      return null;
     }
   };
 
