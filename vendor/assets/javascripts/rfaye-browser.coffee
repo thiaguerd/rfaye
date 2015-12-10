@@ -8,7 +8,8 @@
 					try
 						eval data
 					catch e
-						eval(data.substring(data.indexOf("{") + 1, data.lastIndexOf("}"))) if (e instanceof SyntaxError)
+                		eval("""(#{data}).call(this)""")
+
 			Rfaye.subs[channel] = new Faye.Client("""http://#{window.location.hostname}:9292/faye""").subscribe(channel, func)
 		else if overwrite
 			Rfaye.subs[channel].cancel();

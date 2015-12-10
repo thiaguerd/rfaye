@@ -1,3 +1,9 @@
+# 0.5.2
+  - add initialize file on generator
+  - update rfaye.yml
+  - run app using config on rfaye.yml
+  - update faye extension
+  - update rfaye js
 # 0.5.1
   - rfaye js update
 # 0.5

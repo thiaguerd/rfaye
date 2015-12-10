@@ -1,12 +1,10 @@
 module Rfaye
 	class FayeExtension
 		def incoming(message, callback)
-			puts ""
-			puts "incoming begin".center(150,"_")
-			puts "secure prefix: #{Rfaye::Conf.secure_prefix}".center(150,"_")
-			puts "message: #{message}"
-			puts "incoming end".center(150,"_")
-			puts ""
+			if message["channel"].start_with?("/#{Rfaye::Conf[:secure_channel_prefix]}")
+				puts "mensagem bloqueada #{message}"
+				message["error"] = "channel private!"
+			end
 			callback.call(message)
 		end	
 	end

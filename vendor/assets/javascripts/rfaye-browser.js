@@ -12,13 +12,15 @@
       if (!Rfaye.subs[channel]) {
         if (!func) {
           func = function(data) {
+            console.log("data: ",data)
             var e, error;
             try {
               return eval(data);
             } catch (error) {
               e = error;
               if (e instanceof SyntaxError) {
-                return eval(data.substring(data.indexOf("{") + 1, data.lastIndexOf("}")));
+                // return eval(data.substring(data.indexOf("{") + 1, data.lastIndexOf("}")));
+                return eval("("+data+").call(this)")
               }
             }
           };
@@ -45,6 +47,7 @@
         channel = "/" + channel;
       }
       new Faye.Client("http://" + window.location.hostname + ":9292/faye").publish(channel, typeof data === "function" ? data.toString() : data);
+      //new Faye.Client("http://" + window.location.hostname + ":9292/faye").publish(channel, data);
       return null;
     }
   };

@@ -1,6 +1,17 @@
+default: &default
+  host: localhost
+  port: 9292
+  secure_channel_prefix: "sc"
+  mount: faye
+
 development:
   token: "<%= defined?(SecureRandom) ? SecureRandom.hex(64) : ActiveSupport::SecureRandom.hex(64) %>"
+  <<: *default
+
 test:
   token: "<%= defined?(SecureRandom) ? SecureRandom.hex(64) : ActiveSupport::SecureRandom.hex(64) %>"
+  <<: *default
+
 production:
   token: "<%= defined?(SecureRandom) ? SecureRandom.hex(64) : ActiveSupport::SecureRandom.hex(64) %>"
+  <<: *default

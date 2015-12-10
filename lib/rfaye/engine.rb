@@ -1,4 +1,6 @@
+require "rails/all"
 require "rfaye/view_helpers"
+
 module Rfaye
   class Engine < Rails::Engine
     # Adds the ViewHelpers into ActionView::Base

@@ -1,8 +1,10 @@
+require 'yaml'
+
 module Rfaye
 	class Conf
 
 		@@config = {}
-		@@version = "0.5"
+		@@version = "0.5.2"
 		@@secure_prefix = "s"
 
 		def self.load(filename, environment)
