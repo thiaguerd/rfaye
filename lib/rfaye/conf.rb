@@ -4,7 +4,7 @@ module Rfaye
 	class Conf
 
 		@@config = {}
-		@@version = "0.5.2"
+		@@version = "0.5.3"
 		@@secure_prefix = "s"
 
 		def self.load(filename, environment)

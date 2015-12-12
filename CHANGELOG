@@ -1,3 +1,7 @@
+# 0.5.3
+  - add security channel
+  - add debug option on file config
+  - update helper, update js
 # 0.5.2
   - add initialize file on generator
   - update rfaye.yml

@@ -22,5 +22,6 @@ Gem::Specification.new do |s|
 
 	s.add_runtime_dependency 'faye', '~> 1.1', '>= 1.1.2'
 	s.add_runtime_dependency 'thin', '~> 1.6', '>= 1.6.4'
+	s.add_runtime_dependency 'bcrypt', '~> 3.1', '>= 3.1.7'
 
 end

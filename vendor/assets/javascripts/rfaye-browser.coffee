@@ -8,8 +8,7 @@
 					try
 						eval data
 					catch e
-                		eval("""(#{data}).call(this)""")
-
+						eval("""(#{data}).call(this)""")
 			Rfaye.subs[channel] = new Faye.Client("""http://#{window.location.hostname}:9292/faye""").subscribe(channel, func)
 		else if overwrite
 			Rfaye.subs[channel].cancel();
