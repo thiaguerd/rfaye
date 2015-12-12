@@ -94,7 +94,7 @@ Subscribe
 Publish
 ```rhtml
 <% pub "chat/updates" do %>
-	$("#messages").append("<p>hey brother, see this rape batle https://youtu.be/-ChppfnazzE</p>")
+	{message: "<p>hey brother, see this rape batle https://youtu.be/-ChppfnazzE</p>"}
 <% end %>
 ```
 
