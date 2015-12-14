@@ -2,96 +2,103 @@
 
 Rails app with real time update
 
-## Setup
+### Setup
 
 On Gemfile add:
+
 ```ruby
 gem "rfaye"
 ```
 
 Create required files
-```
+
+```ruby
 rails g rfaye:install
 ```
 
 On application.js add
+
 ```javascript
 //= require rfaye
 ```
 
 To start rfaye
+
 ```
 rackup -s thin -E production rfaye.ru -p 9292
 ```
 
-## JS Usage
+### JS Usage
 
-Subscribe
+Simple Subscription
+
 ```javascript
 Rfaye.sub("chat/updates")
 ```
 
+Using this method you need pass the function to run like this:
+
 Publish
+
 ```javascript
-Rfaye.pub("chat/updates",function(){
+Rfaye.pub("chat/updates", function(){
 	$("#messages").append("<p>hey brother, see this rape batle https://youtu.be/-ChppfnazzE</p>")
 })
 ```
 
-Unsubscribe
-```javascript
-Rfaye.un_sub("chat/updates")
-```
+Subscription with expected parameters
 
-## JS Usage 2
-
-Subscribe
 ```javascript
-Rfaye.sub("chat/updates",function(data){
+Rfaye.sub("chat/updates", function(data){
 	$("#messages").append(data.message)
 })
 ```
 
-Publish
-```javascript
-Rfaye.pub("chat/updates",{
-	message: "hey brother, see this rape batle https://youtu.be/-ChppfnazzE"
-})
-```
+With this subscription you need publish like this
 
-Overwrite subscription
 ```javascript
-Rfaye.sub("chat/updates",function(data){
-	$("#chat").append("<p>" + data.message + "</p>")
+Rfaye.pub("chat/updates", {message: "hey brother, see this rape batle https://youtu.be/-ChppfnazzE"})
+```
+Overwrite subscription
+
+```javascript
+Rfaye.sub("chat/updates", function(data){
+	$("#messages").append(data.msg)
 },true)
 ```
 
-## Rails Usage 1
+Unsubscribe
 
-Subscribe
+```javascript
+Rfaye.un_sub("chat/updates")
+```
+
+## Rails Usage
+
+Simple Subscription
+
 ```rhtml
 <%= sub "chat/updates" %>
 ```
 
 Publish
+
 ```rhtml
 <% pub "chat/updates" do %>
 	$("#messages").append("<p>hey brother, see this rape batle https://youtu.be/-ChppfnazzE</p>")
 <% end %>
 ```
 
-## Rails Usage 2
+Subscription with expected parameters
 
-Subscribe
 ```rhtml
 <%= sub "chat/updates" do %>
-	function(data){
-		$("#chat").append(data.message)
-	}
+	$("#chat").append(data.message)
 <% end %>
 ```
 
 Publish
+
 ```rhtml
 <% pub "chat/updates" do %>
 	{message: "<p>hey brother, see this rape batle https://youtu.be/-ChppfnazzE</p>"}
@@ -106,29 +113,27 @@ Note if you is subscript in channel, everybody can publish messages via curl for
 curl http://localhost:9292/faye -H 'Content-Type: application/json' -d '{"channel": "/chat/updates", "data":"$(\"#messages\").append(\"<p>hey brother, see this rape batle https://youtu.be/-ChppfnazzE</p>\")"}'
 ```
 
-return
+Return
 
 ```
 [{"channel":"/chat/updates","successful":true}]
 ```
 
-
 This is the same thing as:
+
 ```rhtml
 <% pub "chat/updates" do %>
 	$("#messages").append("<p>hey brother, see this rape batle https://youtu.be/-ChppfnazzE</p>")
 <% end %>
 ```
 
-For secure publish use a secure prefix on your channel, prefix default is sc
+For secure publish use a secure prefix on your channel, prefix default is sc (you can change this on config/rfaye.yml)
 
 Subscribe
 
 ```rhtml
 <%= sub "sc/chat/updates" do %>
-	function(data){
-		$("#chat").append(data.message)
-	}
+	$("#chat").append(data.message)
 <% end %>
 ```
 
