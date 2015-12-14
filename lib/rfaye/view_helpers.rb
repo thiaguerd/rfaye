@@ -3,7 +3,6 @@ require 'bcrypt'
 
 module Rfaye
 	module ViewHelpers
-		
 		def sub channel, &block
 			channel = "/#{channel}" if !channel.start_with?("/")
 			content_tag "script", :type => "text/javascript" do
@@ -15,17 +14,17 @@ module Rfaye
 			end
 		end
 
-		def un_sub onde
+		def un_sub channel
 			channel = "/#{channel}" if !channel.start_with?("/")
 			content_tag "script", :type => "text/javascript" do
 				raw %[Rfaye.un_sub("#{channel}")]
 			end
 		end
 
-		def pub channel, &block
-			Net::HTTP.post_form(uri, message: message(channel, &block))  
+		def pub channel, data = nil, &block
+			Net::HTTP.post_form(uri, message: message(channel, data || data(&block)))  
 		end
-		
+
 		private
 			def data &block
 				b = capture(&block)
@@ -33,10 +32,10 @@ module Rfaye
 				l.is_a?(Hash) ? l : b.to_s
 			end
 
-			def message channel, &block
+			def message channel, data
 				channel = "/#{channel}" if !channel.start_with?("/")
-				m = {"channel" => channel, "data" => data(&block), "token" => Rfaye::Conf[:token]}
-				t = token channel, data(&block)
+				m = {"channel" => channel, "data" => data, "token" => Rfaye::Conf[:token]}
+				t = token channel, data
 				m["token"] = t if t
 				m.to_json
 			end
@@ -50,5 +49,8 @@ module Rfaye
 					BCrypt::Password.create "#{data}#{Rfaye::Conf[:token]}", cost: 10
 				end
 			end
+	end
+	class ActionController::Base
+		include Rfaye::ViewHelpers
 	end
 end
