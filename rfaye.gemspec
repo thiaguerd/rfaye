@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
 	s.authors     = ["Thiago Feitosa"]
 	s.email       = "mail@thiago.pro"
 	# s.files       = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-	s.files        = Dir["{app,lib,spec}/**/*", "[A-Z]*", "init.rb"] - ["Gemfile.lock"]
+	s.files        =  Dir.glob("{bin,lib,app}/**/*") + %w(LICENSE README.md)
   	s.require_path = "lib"
 	s.homepage    = "http://rubygems.org/gems/rfaye"
 	s.license     = 'MIT'
