@@ -1,6 +1,6 @@
 # Rfaye
 
-Easy real time update
+Rails app with real time update
 
 ## Setup
 
@@ -100,18 +100,54 @@ Publish
 
 ## Rails Secure Usage
 
-Note if you is sub in channel, anyware can pub messages via curl for example
+Note if you is subscript in channel, everybody can publish messages via curl for example:
 
 ```
 curl http://localhost:9292/faye -H 'Content-Type: application/json' -d '{"channel": "/chat/updates", "data":"$(\"#messages\").append(\"<p>hey brother, see this rape batle https://youtu.be/-ChppfnazzE</p>\")"}'
 ```
 
-This is the same thing as
+return
+
+```
+[{"channel":"/chat/updates","successful":true}]
+```
+
+
+This is the same thing as:
 ```rhtml
 <% pub "chat/updates" do %>
 	$("#messages").append("<p>hey brother, see this rape batle https://youtu.be/-ChppfnazzE</p>")
 <% end %>
 ```
 
-For secure pub use a secure prefix on your channel
- 
+For secure publish use a secure prefix on your channel, prefix default is sc
+
+Subscribe
+
+```rhtml
+<%= sub "sc/chat/updates" do %>
+	function(data){
+		$("#chat").append(data.message)
+	}
+<% end %>
+```
+
+Publish
+
+```rhtml
+<% pub "sc/chat/updates" do %>
+	{message: "<p>hey brother, see this rape batle https://youtu.be/-ChppfnazzE</p>"}
+<% end %>
+```
+
+If someone try this:
+
+```
+curl http://localhost:9292/faye -H 'Content-Type: application/json' -d '{"channel": "/sc/chat/updates", "data":"$(\"#messages\").append(\"<p>hey brother, see this rape batle https://youtu.be/-ChppfnazzE</p>\")"}'
+```
+
+Will see it
+
+```
+[{"channel":"/sc/chat/updates","error":"channel private!","successful":false}]
+```

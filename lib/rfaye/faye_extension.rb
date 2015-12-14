@@ -14,7 +14,11 @@ module Rfaye
 		end
 		private
 			def token_check message
-				BCrypt::Password.new(message["token"]) == "#{message['data']}#{Rfaye::Conf[:token]}"
+				begin
+					BCrypt::Password.new(message["token"]) == "#{message['data']}#{Rfaye::Conf[:token]}"
+				rescue
+					false
+				end
 			end	
 	end
 end
